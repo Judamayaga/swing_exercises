@@ -5,25 +5,31 @@
  */
 package Logica;
 
-import java.sql.Timestamp;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class Conductor {
-    String identificacion;
-    String nombres;
-    String apellidos;
-    String genero;
-    long telefono;
-    long celular;
-    Timestamp fechaDeNacimiento;
-    String correoElectronico;
-    String numeroLicencia;
-    String categoriaLicencia;
-    String turno;
-    String ciudadDeResidencia;
-    String direccion;
-    String barrio;
-    String estadoCivil;
-    int codigoVehiculoAsignado;
+    // Propiedades para Base de datos
+    static Connection con;
+    static Conexion cx;
+    
+    // Propiedades de clase
+    private String identificacion;
+    private String nombres;
+    private String apellidos;
+    private String genero;
+    private String telefono;
+    private String celular;
+    private String fechaDeNacimiento;
+    private String correoElectronico;
+    private String numeroLicencia;
+    private String categoriaLicencia;
+    private String turno;
+    private String ciudadDeResidencia;
+    private String direccion;
+    private String barrio;
+    private String estadoCivil;
+    private int codigoVehiculoAsignado;
     
     // Identificación
     public String getIdentificacion() {
@@ -62,29 +68,29 @@ public class Conductor {
     }
     
     // Telefono;
-    public long getTelefono() {
+    public String getTelefono() {
         return this.telefono;
     }
     
-    public void setTelefono(long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
     
     // Celular;
-    public long getCelular() {
+    public String getCelular() {
         return this.celular;
     }
     
-    public void setCelular(long celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
     
     // Fecha De Nacimiento
-    public Timestamp getFechaDeNacimiento() {
+    public String getFechaDeNacimiento() {
         return this.fechaDeNacimiento;
     }
     
-    public void setFechaDeNacimiento(Timestamp fechaDeNacimiento) {
+    public void setFechaDeNacimiento(String fechaDeNacimiento) {
         this.fechaDeNacimiento = fechaDeNacimiento;
     }
     
@@ -151,7 +157,7 @@ public class Conductor {
         this.barrio = barrio;
     }
     
-    // EstadoCivil
+    // Estado Civil
     public String getEstadoCivil() {
         return this.estadoCivil;
     }
@@ -168,4 +174,48 @@ public class Conductor {
     public void setCodigoVehiculoAsignado(int codigoVehiculoAsignado) {
         this.codigoVehiculoAsignado = codigoVehiculoAsignado;
     }
+    
+    // Create Conductor
+    public boolean CrearConductor() {
+        try {
+            cx = new Conexion();
+            con = cx.getConexion();
+            PreparedStatement stmnt = con.prepareStatement(
+                "INSERT INTO conductores (identificacion, nombres, apellidos, genero, telefono, celular, "
+                + "fecha_de_nacimiento, correo_electronico, numero_licencia, categoria_licencia, turno, ciudad_de_residencia, "
+                + "direccion, barrio, estado_civil, codigo_vehiculo_asignado)"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+
+            stmnt.setString(1, this.identificacion);
+            stmnt.setString(2, this.nombres);
+            stmnt.setString(3, this.apellidos);
+            stmnt.setString(4, this.genero);
+            stmnt.setString(5, "" + this.telefono);
+            stmnt.setString(6, "" + this.celular);
+            stmnt.setString(7, "" + this.fechaDeNacimiento);
+            stmnt.setString(8, this.correoElectronico);
+            stmnt.setString(9, this.numeroLicencia);
+            stmnt.setString(10, this.categoriaLicencia);
+            stmnt.setString(11, this.turno);
+            stmnt.setString(12, this.ciudadDeResidencia);
+            stmnt.setString(13, this.direccion);
+            stmnt.setString(14, this.barrio);
+            stmnt.setString(15, this.estadoCivil);
+            stmnt.setString(16, "" + this.codigoVehiculoAsignado);
+
+            stmnt.executeUpdate();
+            stmnt.close();
+            con.close();
+
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
+    // Read Vehiculo
+    // Update Vehiculo
+    // Delete Vehiculo
 }

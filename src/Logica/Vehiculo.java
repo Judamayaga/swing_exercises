@@ -16,7 +16,7 @@ public class Vehiculo {
     private String marca;
     private String modelo;
     private String descripcion;
-    private Timestamp inicioOperacion;
+    private String inicioOperacion;
     private String estadoAsignacion;
     
     // Setters y getters para cada propiedad
@@ -75,11 +75,11 @@ public class Vehiculo {
     }
     
     // Inicio de operación
-    public Timestamp getInicioOperacion() {
+    public String getInicioOperacion() {
         return this.inicioOperacion;
     }
     
-    public void setInicioOperacion(Timestamp inicioOperacion) {
+    public void setInicioOperacion(String inicioOperacion) {
         this.inicioOperacion = inicioOperacion;
     }
     

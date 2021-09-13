@@ -5,25 +5,38 @@
  */
 package mtto_telec_project;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-
+import Logica.*;
 
 public class Mtto_telec_project {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         try {
-            Logica.Conexion cx = new Logica.Conexion();
+            Conexion cx = new Conexion();
             Connection con = cx.getConexion();
+            Conductor drvr = new Conductor();
             
-            PreparedStatement stmt = con.prepareStatement("UPDATE vehiculos SET placa = 'RGL-123' WHERE (idVehiculos = 1)");
-            stmt.executeUpdate();
-            stmt.close();
-            con.close();
+            drvr.setApellidos("Plazas Romero");
+            drvr.setBarrio("Nueva Zelandia");
+            drvr.setCategoriaLicencia("B");
+            drvr.setCelular("3143605335");
+            drvr.setTelefono("4567899");
+            drvr.setCiudadDeResidencia("Bogotá");
+            drvr.setCodigoVehiculoAsignado(1);
+            drvr.setCorreoElectronico("mplazasr@unal.edu.co");
+            drvr.setDireccion("Kr 48A 26 06");
+            drvr.setEstadoCivil("Casada");
+            drvr.setFechaDeNacimiento("2000-10-27");
+            drvr.setGenero("Femenino");
+            drvr.setIdentificacion("1000132837");
+            drvr.setNombres("Mariana");
+            drvr.setNumeroLicencia("AAA294");
+            drvr.setTurno("Mañana");
+            
+            drvr.CrearConductor();
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
